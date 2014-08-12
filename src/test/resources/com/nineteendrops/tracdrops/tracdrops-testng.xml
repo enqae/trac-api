@@ -1,0 +1,47 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="TRACDrops">
+
+    <parameter name="tracUrl" value="http://127.0.0.1:8080/projects/test3/xmlrpc"/>
+    <parameter name="user" value="admin"/>
+    <parameter name="password" value="admin"/>
+
+    <test name="Search">
+        <groups>
+            <define name="searchGroup">
+                <include name="TRACDrops"/>
+                <include name="TRACDrops.Search"/>
+                <include name="TRACDrops.Search.Init"/>
+                <include name="TRACDrops.Search.Simple"/>
+                <include name="TRACDrops.Search.Complex"/>
+            </define>
+            <run>
+                <exclude name="searchGroup"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="com.nineteendrops.tracdrops.api.search"/>
+            <package name="com.nineteendrops.tracdrops.api.search.populator"/>
+        </packages>
+    </test>
+
+    <test name="Ticket">
+        <groups>
+            <define name="ticketGroup">
+                <include name="TRACDrops"/>
+                <include name="TRACDrops.Ticket"/>
+                <include name="TRACDrops.Ticket.Init"/>
+            </define>
+            <run>
+                <include name="ticketGroup"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="com.nineteendrops.tracdrops.api.ticket.ticket"/>
+            <package name="com.nineteendrops.tracdrops.api.ticket.ticket.populator"/>
+        </packages>
+    </test>
+
+</suite>

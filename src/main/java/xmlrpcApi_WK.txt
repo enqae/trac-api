@@ -1,0 +1,51 @@
+
+wiki.listLinks
+  array wiki.listLinks(string pagename)
+
+  ''Not implemented''
+
+
+*************search.getSearchFilters
+  array search.getSearchFilters()
+
+  Retrieve a list of search filters with each element in the form
+  (name, description).
+
+
+**************************search.performSearch
+  array search.performSearch(string query, array filters=[])
+
+  Perform a search using the given filters. Defaults to all if not
+   provided. Results are returned as a list of tuples in the form
+  (href, title, date, author, excerpt).
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxx  wikiext.getPageVersions
+wikiext.getPageVersions
+  array wikiext.getPageVersions(string pagename)
+
+  Return an array of page versions info
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxx   wikiext.hasChildren
+  boolean wikiext.hasChildren(string pagename)
+
+  Returns true if the page has children.
+
+
+wikiext.getChildren
+  array wikiext.getChildren(string pagename)
+
+  Returns a list of all pages. The result is an array of utf8 pagenames.
+
+
+wikiext.getMacros
+  struct wikiext.getMacros()
+
+  Return the list of registered wiki macros
+
+
+ticketext.update
+  array ticketext.update(int id, string author, string comment, struct attributes)
+
+  Update a ticket, returning the new ticket in the same form as getTicket().
+

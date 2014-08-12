@@ -1,0 +1,523 @@
+
+*************system.multicall
+  array system.multicall(array signatures)
+
+  Takes an array of XML-RPC calls encoded as structs of the form (in
+  a Pythonish notation here):
+
+  {'methodName': string, 'params': array}
+
+
+*************system.listMethods
+  array system.listMethods()
+
+  This method returns a list of strings, one for each (non-system)
+  method supported by the XML-RPC server.
+
+
+*************system.methodHelp
+  string system.methodHelp(string method)
+
+  This method takes one parameter, the name of a method implemented
+  by the XML-RPC server. It returns a documentation string describing the
+  use of that method. If no such string is available, an empty string is
+  returned. The documentation string may contain HTML markup.
+
+
+*************system.methodSignature
+  array system.methodSignature(string method)
+
+  This method takes one parameter, the name of a method implemented
+  by the XML-RPC server.
+
+  It returns an array of possible signatures for this method. A signature
+  is an array of types. The first of these types is the return type of
+  the method, the rest are parameters.
+
+
+*************system.getAPIVersion
+  array system.getAPIVersion()
+
+  Returns a list with two elements. First element is the major
+  version number, second is the minor. Changes to the major version
+  indicate API breaking changes, while minor version changes are simple
+  additions, bug fixes, etc.
+
+
+*************ticket.query
+  array ticket.query(string qstr="status!=closed")
+
+  Perform a ticket query, returning a list of ticket ID's.
+
+
+ticket.getRecentChanges
+  array ticket.getRecentChanges(dateTime.iso8601 since)
+
+  Returns a list of IDs of tickets that have changed since timestamp.
+
+
+ticket.getAvailableActions
+  array ticket.getAvailableActions(int id)
+
+  Returns the actions that can be performed on the ticket.
+
+
+*************ticket.get
+  array ticket.get(int id)
+
+  Fetch a ticket. Returns [id, time_created, time_changed, attributes].
+
+
+ticket.create
+  int ticket.create(string summary, string description, struct attributes={}, boolean notify=False)
+
+  Create a new ticket, returning the ticket ID.
+
+
+ticket.update
+  array ticket.update(int id, string comment, struct attributes={}, boolean notify=False)
+
+  Update a ticket, returning the new ticket in the same form as getTicket().
+
+
+ticket.delete
+  int ticket.delete(int id)
+
+  Delete ticket with the given id.
+
+
+ticket.changeLog
+  struct ticket.changeLog(int id, int when=0)
+
+  Return the changelog as a list of tuples of the form
+  (time, author, field, oldvalue, newvalue, permanent).
+
+  While the other tuple elements are quite self-explanatory,
+  the `permanent` flag is used to distinguish collateral changes
+  that are not yet immutable (like attachments, currently).
+
+
+ticket.listAttachments
+  array ticket.listAttachments(int ticket)
+
+  Lists attachments for a given ticket. Returns (filename,
+  description, size, time, author) for each attachment.
+
+
+ticket.getAttachment
+  base64 ticket.getAttachment(int ticket, string filename)
+
+  returns the content of an attachment.
+
+
+ticket.putAttachment
+  string ticket.putAttachment(int ticket, string filename, string description, base64 data, boolean replace=True)
+
+  Add an attachment, optionally (and defaulting to) overwriting an
+  existing one. Returns filename.
+
+
+ticket.deleteAttachment
+  boolean ticket.deleteAttachment(int ticket, string filename)
+
+  Delete an attachment.
+
+
+ticket.getTicketFields
+  array ticket.getTicketFields()
+
+  Return a list of all ticket fields fields.
+
+
+ticket.component.getAll
+  array ticket.component.getAll()
+
+  Get a list of all ticket component names.
+
+
+ticket.component.get
+  struct ticket.component.get(string name)
+
+  Get a ticket component.
+
+
+ticket.component.delete
+  int ticket.component.delete(string name)
+
+  Delete a ticket component
+
+
+ticket.component.create
+  int ticket.component.create(string name, struct attributes)
+
+  Create a new ticket component with the given attributes.
+
+
+ticket.component.update
+  int ticket.component.update(string name, struct attributes)
+
+  Update ticket component with the given attributes.
+
+
+ticket.version.getAll
+  array ticket.version.getAll()
+
+  Get a list of all ticket version names.
+
+
+ticket.version.get
+  struct ticket.version.get(string name)
+
+  Get a ticket version.
+
+
+ticket.version.delete
+  int ticket.version.delete(string name)
+
+  Delete a ticket version
+
+
+ticket.version.create
+  int ticket.version.create(string name, struct attributes)
+
+  Create a new ticket version with the given attributes.
+
+
+ticket.version.update
+  int ticket.version.update(string name, struct attributes)
+
+  Update ticket version with the given attributes.
+
+
+ticket.milestone.getAll
+  array ticket.milestone.getAll()
+
+  Get a list of all ticket milestone names.
+
+
+ticket.milestone.get
+  struct ticket.milestone.get(string name)
+
+  Get a ticket milestone.
+
+
+ticket.milestone.delete
+  int ticket.milestone.delete(string name)
+
+  Delete a ticket milestone
+
+
+ticket.milestone.create
+  int ticket.milestone.create(string name, struct attributes)
+
+  Create a new ticket milestone with the given attributes.
+
+
+ticket.milestone.update
+  int ticket.milestone.update(string name, struct attributes)
+
+  Update ticket milestone with the given attributes.
+
+
+ticket.type.getAll
+  array ticket.type.getAll()
+
+  Get a list of all ticket type names.
+
+
+ticket.type.get
+  string ticket.type.get(string name)
+
+  Get a ticket type.
+
+
+ticket.type.delete
+  int ticket.type.delete(string name)
+
+  Delete a ticket type
+
+
+ticket.type.create
+  int ticket.type.create(string name, string value)
+
+  Create a new ticket type with the given value.
+
+
+ticket.type.update
+  int ticket.type.update(string name, string value)
+
+  Update ticket type with the given value.
+
+
+ticket.status.getAll
+  array ticket.status.getAll()
+
+  Get a list of all ticket status names.
+
+
+ticket.status.get
+  string ticket.status.get(string name)
+
+  Get a ticket status.
+
+
+ticket.status.delete
+  int ticket.status.delete(string name)
+
+  Delete a ticket status
+
+
+ticket.status.create
+  int ticket.status.create(string name, string value)
+
+  Create a new ticket status with the given value.
+
+
+ticket.status.update
+  int ticket.status.update(string name, string value)
+
+  Update ticket status with the given value.
+
+
+ticket.resolution.getAll
+  array ticket.resolution.getAll()
+
+  Get a list of all ticket resolution names.
+
+
+ticket.resolution.get
+  string ticket.resolution.get(string name)
+
+  Get a ticket resolution.
+
+
+ticket.resolution.delete
+  int ticket.resolution.delete(string name)
+
+  Delete a ticket resolution
+
+
+ticket.resolution.create
+  int ticket.resolution.create(string name, string value)
+
+  Create a new ticket resolution with the given value.
+
+
+ticket.resolution.update
+  int ticket.resolution.update(string name, string value)
+
+  Update ticket resolution with the given value.
+
+
+ticket.priority.getAll
+  array ticket.priority.getAll()
+
+  Get a list of all ticket priority names.
+
+
+ticket.priority.get
+  string ticket.priority.get(string name)
+
+  Get a ticket priority.
+
+
+ticket.priority.delete
+  int ticket.priority.delete(string name)
+
+  Delete a ticket priority
+
+
+ticket.priority.create
+  int ticket.priority.create(string name, string value)
+
+  Create a new ticket priority with the given value.
+
+
+ticket.priority.update
+  int ticket.priority.update(string name, string value)
+
+  Update ticket priority with the given value.
+
+
+ticket.severity.getAll
+  array ticket.severity.getAll()
+
+  Get a list of all ticket severity names.
+
+
+ticket.severity.get
+  string ticket.severity.get(string name)
+
+  Get a ticket severity.
+
+
+ticket.severity.delete
+  int ticket.severity.delete(string name)
+
+  Delete a ticket severity
+
+
+ticket.severity.create
+  int ticket.severity.create(string name, string value)
+
+  Create a new ticket severity with the given value.
+
+
+ticket.severity.update
+  int ticket.severity.update(string name, string value)
+
+  Update ticket severity with the given value.
+
+
+wiki.getRecentChanges
+  struct wiki.getRecentChanges(dateTime.iso8601 since)
+
+  Get list of changed pages since timestamp
+
+
+wiki.getRPCVersionSupported
+  int wiki.getRPCVersionSupported()
+
+  Returns 2 with this version of the Trac API.
+
+
+wiki.getPage
+  string wiki.getPage(string pagename, int version=None)
+
+  Get the raw Wiki text of page, latest version.
+
+
+wiki.getPageVersion
+  string wiki.getPageVersion(string pagename, int version=None)
+
+  Get the raw Wiki text of page, latest version.
+
+
+wiki.getPageHTML
+  string wiki.getPageHTML(string pagename, int version=None)
+
+  Return page in rendered HTML, latest version.
+
+
+wiki.getPageHTMLVersion
+  string wiki.getPageHTMLVersion(string pagename, int version=None)
+
+  Return page in rendered HTML, latest version.
+
+
+wiki.getAllPages
+  array wiki.getAllPages()
+
+  Returns a list of all pages. The result is an array of utf8 pagenames.
+
+
+wiki.getPageInfo
+  struct wiki.getPageInfo(string pagename, int version=None)
+
+  Returns information about the given page.
+
+
+wiki.getPageInfoVersion
+  struct wiki.getPageInfoVersion(string pagename, int version=None)
+
+  Returns information about the given page.
+
+
+wiki.putPage
+  boolean wiki.putPage(string pagename, string content, struct attributes)
+
+  writes the content of the page.
+
+
+wiki.listAttachments
+  array wiki.listAttachments(string pagename)
+
+  Lists attachments on a given page.
+
+
+wiki.getAttachment
+  base64 wiki.getAttachment(string path)
+
+  returns the content of an attachment.
+
+
+wiki.putAttachment
+  boolean wiki.putAttachment(string path, base64 data)
+
+  (over)writes an attachment. Returns True if successful.
+
+  This method is compatible with WikiRPC.  `putAttachmentEx` has a more
+  extensive set of (Trac-specific) features.
+
+
+wiki.putAttachmentEx
+  boolean wiki.putAttachmentEx(string pagename, string filename, string description, base64 data, boolean replace=True)
+
+  Attach a file to a Wiki page. Returns the (possibly transformed)
+  filename of the attachment.
+
+  Use this method if you don't care about WikiRPC compatibility.
+
+
+wiki.deleteAttachment
+  boolean wiki.deleteAttachment(string path)
+
+  Delete an attachment.
+
+
+wiki.listLinks
+  array wiki.listLinks(string pagename)
+
+  ''Not implemented''
+
+
+wiki.wikiToHtml
+  string wiki.wikiToHtml(string text)
+
+  Render arbitrary Wiki text as HTML.
+
+
+*************search.getSearchFilters
+  array search.getSearchFilters()
+
+  Retrieve a list of search filters with each element in the form
+  (name, description).
+
+
+**************************search.performSearch
+  array search.performSearch(string query, array filters=[])
+
+  Perform a search using the given filters. Defaults to all if not
+   provided. Results are returned as a list of tuples in the form
+  (href, title, date, author, excerpt).
+
+
+wikiext.getPageVersions
+  array wikiext.getPageVersions(string pagename)
+
+  Return an array of page versions info
+
+
+wikiext.hasChildren
+  boolean wikiext.hasChildren(string pagename)
+
+  Returns true if the page has children.
+
+
+wikiext.getChildren
+  array wikiext.getChildren(string pagename)
+
+  Returns a list of all pages. The result is an array of utf8 pagenames.
+
+
+wikiext.getMacros
+  struct wikiext.getMacros()
+
+  Return the list of registered wiki macros
+
+
+ticketext.update
+  array ticketext.update(int id, string author, string comment, struct attributes)
+
+  Update a ticket, returning the new ticket in the same form as getTicket().
+

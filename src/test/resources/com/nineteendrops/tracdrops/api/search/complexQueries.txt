@@ -1,0 +1,3 @@
+WIKI_PAGE_4, wiki, 1
+WIKI_PAGE_, wiki, 8
+TRAC_TEST, wiki|ticket, 20

@@ -1,0 +1,5 @@
+- Encapsular Excepciones de Error
+
+- Cambiar el log
+
+
